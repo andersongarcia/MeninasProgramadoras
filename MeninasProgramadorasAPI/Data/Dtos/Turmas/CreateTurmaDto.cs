@@ -1,13 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MeninasProgramadorasAPI.Models;
+namespace MeninasProgramadorasAPI.Data.Dtos.Turmas;
 
-public class Turma
+public class CreateTurmaDto
 {
-    [Key]
     [Required]
     public int Numero { get; set; }
     public DateTime DataInicio { get; set; }
-    public virtual IList<Avaliacao> Avaliacoes { get; set; }
     public int TotalSemanas { get; set; }
 }

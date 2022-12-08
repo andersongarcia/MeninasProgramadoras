@@ -1,53 +1,53 @@
-﻿using AutoMapper;
-using MeninasProgramadorasAPI.Data;
+﻿using MeninasProgramadorasAPI.Data.Dtos.Alunas;
 using MeninasProgramadorasAPI.Models;
+using MeninasProgramadorasAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+namespace MeninasProgramadorasAPI.Controllers;
 
-namespace MeninasProgramadorasAPI.Controllers
+[Route("[controller]")]
+[ApiController]
+public class AlunasController : ControllerBase
 {
-    [Route("[controller]")]
-    [ApiController]
-    public class AlunasController : ControllerBase
+    private IAlunaService _alunaService;
+
+    public AlunasController(IAlunaService alunaService)
     {
-        private AlunasContext _context;
-        private IMapper _mapper;
+        _alunaService = alunaService;
+    }
 
-        public AlunasController(AlunasContext context, IMapper mapper)
-        {
-            _context = context;
-            _mapper = mapper;
-        }
+    [HttpGet]
+    public IEnumerable<AlunaDto> Get()
+    {
+        return _alunaService.ObterAlunas();
+    }
 
-        [HttpGet]
-        public IEnumerable<Aluna> Get()
-        {
-            return _context.Alunas;
-        }
+    [HttpGet("{cpf}")]
+    public IActionResult Get(string cpf)
+    {
+        AlunaDto? alunaDto = _alunaService.ObterAlunaPorCPF(cpf);
 
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        if(alunaDto == null) return NotFound();
 
-        // POST api/<AlunasController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+        return Ok(alunaDto);
+    }
 
-        // PUT api/<AlunasController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+    [HttpPost]
+    public IActionResult Create([FromBody] CreateAlunaDto alunaDto)
+    {
+        Aluna aluna = _alunaService.CriarAluna(alunaDto);
+        return CreatedAtAction(nameof(Get), new { cpf = aluna.CPF }, aluna);
+    }
 
-        // DELETE api/<AlunasController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+    // PUT api/<AlunasController>/5
+    [HttpPut("{id}")]
+    public void Put(int id, [FromBody] string value)
+    {
+    }
+
+    // DELETE api/<AlunasController>/5
+    [HttpDelete("{id}")]
+    public void Delete(int id)
+    {
     }
 }

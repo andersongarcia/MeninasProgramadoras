@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MeninasProgramadorasAPI.Data.Dtos;
+namespace MeninasProgramadorasAPI.Data.Dtos.Alunas;
 
 public class CreateAlunaDto
 {

@@ -1,13 +1,35 @@
-﻿namespace MeninasProgramadorasAPI.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MeninasProgramadorasAPI.Models;
 
 public class Avaliacao
 {
+    [Key]
+    [Required]
     public int Id { get; set; }
-    public Aluna Aluna { get; set; }
-    public Turma Turma { get; set; }
-    public RegistroPresenca PresencaAbertura { get; set; }
-    public IList<RegistroPresenca> PresencasAulas { get; set; }
-    public IList<RegistroPresenca> PresencasMonitorias { get; set; }
+    public virtual Aluna Aluna { get; set; }
+    public string AlunaCPF { get; set; }
+    public virtual Turma Turma { get; set; }
+    public int TurmaNumero { get; set; }
+    public virtual IList<RegistroPresenca> Presencas { get; set; }
+
+    [NotMapped]
+    public bool PresenteAbertura {
+        get
+        {
+            return Presencas.Any(presenca => presenca.TipoDeEvento == TipoDeEvento.Abertura);
+        }
+    }
 
 
+    [NotMapped]
+    public double PresencaAulas
+    {
+        get
+        {
+            int totalPresencas = Presencas.Count(presenca => presenca.TipoDeEvento == TipoDeEvento.Aula);
+            return (double)totalPresencas / (double)Turma.TotalSemanas;
+        }
+    }
 }

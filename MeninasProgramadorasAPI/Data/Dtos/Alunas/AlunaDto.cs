@@ -1,6 +1,6 @@
-﻿namespace MeninasProgramadorasAPI.Data.Dtos;
+﻿namespace MeninasProgramadorasAPI.Data.Dtos.Alunas;
 
-public class ReadAlunaDto
+public class AlunaDto
 {
     public string CPF { get; set; }
     public string PrimeiroNome { get; set; }
