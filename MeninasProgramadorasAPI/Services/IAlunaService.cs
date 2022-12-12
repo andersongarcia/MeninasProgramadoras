@@ -10,6 +10,7 @@ public interface IAlunaService
     AlunaDto? ObterAlunaPorNome(string? v);
     IEnumerable<AlunaDto> ObterAlunas();
     IEnumerable<AlunaDto> ObterAlunas(IEnumerable<Aluna> alunas);
+    void RemoverAluna(string cpf);
     void RemoverTodasAlunas();
     void ValidaAluna(string cpf);
 }

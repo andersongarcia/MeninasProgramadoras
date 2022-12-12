@@ -9,4 +9,5 @@ public interface IExercicioService
     IEnumerable<ExercicioDto> ObterExercicios();
     IEnumerable<ExercicioDto> ObterExercicios(IEnumerable<Exercicio> exercicios);
     Exercicio RegistrarExercicio(CreateExercicioDto exercicioDto);
+    void RemoverExercicio(int id);
 }

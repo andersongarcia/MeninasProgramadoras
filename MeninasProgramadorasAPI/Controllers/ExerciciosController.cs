@@ -7,7 +7,6 @@ using MeninasProgramadorasAPI.Data.Dtos.Turmas;
 using MeninasProgramadorasAPI.Exceptions;
 using MeninasProgramadorasAPI.Models;
 using MeninasProgramadorasAPI.Services;
-using MeninasProgramadorasAPI.Services.Impl;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 using System.Text;
@@ -31,12 +30,21 @@ public class ExerciciosController : ControllerBase
         _textInfo = textInfo;
     }
 
+    /// <summary>
+    /// Listar exercícios, avaliações finais e avaliações de recuperação
+    /// </summary>
+    /// <returns>Lista de todos os exercícios, avaliações finais e avaliações de recuperação</returns>
     [HttpGet]
     public IEnumerable<ExercicioDto> Get()
     {
         return _exercicioService.ObterExercicios();
     }
 
+    /// <summary>
+    /// Obter exercício, avaliação final ou avaliação de recuperação
+    /// </summary>
+    /// <param name="id">Id do exercício</param>
+    /// <returns>Dados do exercício</returns>
     [HttpGet("{id}")]
     public IActionResult Get(int id)
     {
@@ -47,6 +55,11 @@ public class ExerciciosController : ControllerBase
         return Ok(exercicioDto);
     }
 
+    /// <summary>
+    /// Registrar exercício
+    /// </summary>
+    /// <param name="exercicioDto">Dados do exercício a ser registrado</param>
+    /// <returns>Dados do exercício registrado</returns>
     [HttpPost]
     public IActionResult Create([FromBody] CreateExercicioDto exercicioDto)
     {
@@ -54,18 +67,23 @@ public class ExerciciosController : ControllerBase
         return CreatedAtAction(nameof(Get), new { id = exercicio.Id }, exercicio);
     }
 
-    // PUT api/<ExerciciosController>/5
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
-    {
-    }
-
-    // DELETE api/<ExerciciosController>/5
+    /// <summary>
+    /// Remover exercício
+    /// </summary>
+    /// <param name="id">Id do exercício</param>
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public IActionResult Delete(int id)
     {
+        _exercicioService.RemoverExercicio(id);
+        return Ok();
     }
 
+    /// <summary>
+    /// Importar dados de exercícios, avaliação final ou avaliação de recuperação
+    /// </summary>
+    /// <param name="exercicioDto">Arquivo CSC, número da turma e tipo de exercício</param>
+    /// <returns>Lista de exercícios cadastrados com sucesso</returns>
+    /// <exception cref="Exception"></exception>
     [HttpPost]
     [Route("importar")]
     public async Task<IEnumerable<ExercicioDto>> ImportarPresencas([FromForm] ImportExercicioDto exercicioDto)

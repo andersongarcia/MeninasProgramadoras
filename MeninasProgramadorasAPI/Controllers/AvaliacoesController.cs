@@ -1,5 +1,4 @@
 ﻿using MeninasProgramadorasAPI.Data.Dtos.Avaliacoes;
-using MeninasProgramadorasAPI.Models;
 using MeninasProgramadorasAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,12 +17,21 @@ namespace MeninasProgramadorasAPI.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Listar avaliações
+        /// </summary>
+        /// <returns>Lista de avaliações</returns>
         [HttpGet]
         public IEnumerable<AvaliacaoDto> Get()
         {
             return _service.ObterAvaliacoes();
         }
 
+        /// <summary>
+        /// Obter avaliação por id
+        /// </summary>
+        /// <param name="id">Id da avaliação</param>
+        /// <returns>Dados da avaliação, se encontrada</returns>
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -32,24 +40,6 @@ namespace MeninasProgramadorasAPI.Controllers
             if (avaliacaoDto == null) return NotFound();
 
             return Ok(avaliacaoDto);
-        }
-
-        [HttpPost]
-        public IActionResult Create([FromBody] CreateAvaliacaoDto avaliacaoDto)
-        {
-            Avaliacao avaliacao = _service.CriarAvaliacao(avaliacaoDto);
-            return CreatedAtAction(nameof(Get), new { id = avaliacao.Id }, avaliacao);
-        }
-
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<AvaliacoesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

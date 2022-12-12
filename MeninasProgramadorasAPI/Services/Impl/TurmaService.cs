@@ -27,6 +27,7 @@ public class TurmaService : ITurmaService
     public TurmaDto? ObterTurmaPorNumero(int numero)
     {
         Turma? turma = _context.Turmas.FirstOrDefault(turma => turma.Numero == numero);
+        
         if (turma == null) return null;
 
         return _mapper.Map<TurmaDto>(turma);
@@ -35,5 +36,14 @@ public class TurmaService : ITurmaService
     public IEnumerable<TurmaDto> ObterTurmas()
     {
         return _mapper.Map<List<TurmaDto>>(_context.Turmas);
+    }
+
+    public void RemoverTurma(int numero)
+    {
+        Turma? turma = _context.Turmas.FirstOrDefault(turma => turma.Numero == numero);
+
+        if (turma == null) return;
+
+        _context.Turmas.Remove(turma);
     }
 }

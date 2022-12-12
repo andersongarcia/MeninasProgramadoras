@@ -22,12 +22,21 @@ public class AlunasController : ControllerBase
         _textInfo = textInfo;
     }
 
+    /// <summary>
+    /// Listar alunas
+    /// </summary>
+    /// <returns>Lista de alunas em formato JSON</returns>
     [HttpGet]
     public IEnumerable<AlunaDto> Get()
     {
         return _alunaService.ObterAlunas();
     }
 
+    /// <summary>
+    /// Obter aluna por CPF
+    /// </summary>
+    /// <param name="cpf">CPF da aluna</param>
+    /// <returns>Dados da aluna, se encontrada</returns>
     [HttpGet("{cpf}")]
     public IActionResult Get(string cpf)
     {
@@ -38,25 +47,35 @@ public class AlunasController : ControllerBase
         return Ok(alunaDto);
     }
 
+    /// <summary>
+    /// Criar aluna
+    /// </summary>
+    /// <param name="alunaDto">Dados da aluna para criação</param>
+    /// <returns>Dados da aluna criada</returns>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public IActionResult Create([FromBody] CreateAlunaDto alunaDto)
     {
         Aluna aluna = _alunaService.CriarAluna(alunaDto);
         return CreatedAtAction(nameof(Get), new { cpf = aluna.CPF }, aluna);
     }
 
-    // PUT api/<AlunasController>/5
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    /// <summary>
+    /// Remover aluna
+    /// </summary>
+    /// <param name="cpf">CPF da aluna</param>
+    [HttpDelete("{cpf}")]
+    public IActionResult Delete(string cpf)
     {
+        _alunaService.RemoverAluna(cpf);
+        return Ok();
     }
 
-    // DELETE api/<AlunasController>/5
-    [HttpDelete("{id}")]
-    public void Delete(int id)
-    {
-    }
-
+    /// <summary>
+    /// Remover todas as alunas
+    /// (útil para testes, deve ser desabilitado em produção)
+    /// </summary>
+    /// <returns></returns>
     [HttpDelete()]
     public IActionResult Delete()
     {
@@ -64,6 +83,11 @@ public class AlunasController : ControllerBase
         return Ok();
     }
 
+    /// <summary>
+    /// Importar dados de alunas
+    /// </summary>
+    /// <param name="file">Arquivo CSV com dados das alunas</param>
+    /// <returns>Lista de alunas cadastradas com sucesso</returns>
     [HttpPost]
     [Route("importar")]
     public async Task<IEnumerable<AlunaDto>> ImportarAlunas(IFormFile file)

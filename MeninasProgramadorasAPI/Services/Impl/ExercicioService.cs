@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MeninasProgramadorasAPI.Data;
 using MeninasProgramadorasAPI.Data.Dtos.Exercicios;
-using MeninasProgramadorasAPI.Data.Dtos.Presencas;
 using MeninasProgramadorasAPI.Models;
 
 namespace MeninasProgramadorasAPI.Services.Impl;
@@ -49,5 +48,14 @@ public class ExercicioService : IExercicioService
         _context.Exercicios.Add(exercicio);
         _context.SaveChanges();
         return exercicio;
+    }
+
+    public void RemoverExercicio(int id)
+    {
+        Exercicio? exercicio = _context.Exercicios.FirstOrDefault(exercicio => exercicio.Id == id);
+
+        if (exercicio == null) return;
+
+        _context.Exercicios.Remove(exercicio);
     }
 }

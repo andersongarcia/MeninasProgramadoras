@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MeninasProgramadorasAPI.Data;
-using MeninasProgramadorasAPI.Data.Dtos.Exercicios;
 using MeninasProgramadorasAPI.Data.Dtos.Presencas;
 using MeninasProgramadorasAPI.Models;
 
@@ -49,5 +48,11 @@ public class PresencaService : IPresencaService
         _context.Presencas.Add(presenca);
         _context.SaveChanges();
         return presenca;
+    }
+
+    public void RemoverPresenca(int id)
+    {
+        RegistroPresenca? presenca = _context.Presencas.FirstOrDefault(presenca => presenca.Id == id);
+        _context.Presencas.Remove(presenca);
     }
 }

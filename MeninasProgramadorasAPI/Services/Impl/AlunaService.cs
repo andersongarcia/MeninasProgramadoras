@@ -52,6 +52,15 @@ public class AlunaService : IAlunaService
         return _mapper.Map<List<AlunaDto>>(alunas);
     }
 
+    public void RemoverAluna(string cpf)
+    {
+        Aluna? aluna = _context.Alunas.FirstOrDefault(aluna => aluna.CPF == cpf);
+
+        if (aluna == null) throw new AlunaNotFoundException();
+        
+        _context.Alunas.Remove(aluna);
+    }
+
     public void RemoverTodasAlunas()
     {
         _context.Database.ExecuteSqlRaw("SET FOREIGN_KEY_CHECKS = 0;TRUNCATE TABLE alunas;");

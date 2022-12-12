@@ -9,4 +9,5 @@ public interface IPresencaService
     RegistroPresencaDto? ObterPresencasPorId(int id);
     IEnumerable<RegistroPresencaDto> ObterPresencas();
     IEnumerable<RegistroPresencaDto> ObterPresencas(IEnumerable<RegistroPresenca> presencasCadastradas);
+    void RemoverPresenca(int id);
 }

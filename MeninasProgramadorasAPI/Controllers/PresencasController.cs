@@ -29,12 +29,21 @@ public class PresencasController : ControllerBase
         _textInfo = textInfo;
     }
 
+    /// <summary>
+    /// Listar todos os registros de presenças em aulas e monitorias
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public IEnumerable<RegistroPresencaDto> Get()
     {
         return _presencaService.ObterPresencas();
     }
 
+    /// <summary>
+    /// Obter registro de presença em aula ou monitoria
+    /// </summary>
+    /// <param name="id">Id do registro de presença</param>
+    /// <returns>Dados do registro de presença, se encontrado</returns>
     [HttpGet("{id}")]
     public IActionResult Get(int id)
     {
@@ -45,6 +54,11 @@ public class PresencasController : ControllerBase
         return Ok(presencaDto);
     }
 
+    /// <summary>
+    /// Registrar presença em aula ou monitoria
+    /// </summary>
+    /// <param name="presencaDto">Dados da aluna, da turma e do tipo de evento</param>
+    /// <returns>Dados registrados</returns>
     [HttpPost]
     public IActionResult Create([FromBody] CreateRegistroPresencaDto presencaDto)
     {
@@ -52,18 +66,23 @@ public class PresencasController : ControllerBase
         return CreatedAtAction(nameof(Get), new { id = presenca.Id }, presenca);
     }
 
-    // PUT api/<PresencasController>/5
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
-    {
-    }
-
-    // DELETE api/<PresencasController>/5
+    /// <summary>
+    /// Remover registro de presença em aula ou monitoria
+    /// </summary>
+    /// <param name="id">Id do registro</param>
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public IActionResult Delete(int id)
     {
+        _presencaService.RemoverPresenca(id);
+        return Ok();
     }
 
+    /// <summary>
+    /// Importar dados de registros de presença em aulas ou monitorias
+    /// </summary>
+    /// <param name="presencaDto">Arquivo CSV, número da turma e tipo de evento</param>
+    /// <returns>Dados das presenças registradas com sucesso</returns>
+    /// <exception cref="Exception"></exception>
     [HttpPost]
     [Route("importar")]
     public async Task<IEnumerable<RegistroPresencaDto>> ImportarPresencas([FromForm] ImportRegistroPresencaDto presencaDto)
