@@ -45,4 +45,20 @@ public class AvaliacaoService : IAvaliacaoService
     {
         return _mapper.Map<List<AvaliacaoDto>>(_context.Avaliacoes);
     }
+
+    public Avaliacao ObterOuCriarAvaliacao(string alunaCPF, int turmaNumero)
+    {
+        var avaliacao = _context.Avaliacoes.FirstOrDefault(
+            avaliacao =>
+                avaliacao.AlunaCPF == alunaCPF
+                &&
+                avaliacao.TurmaNumero == turmaNumero);
+
+        if (avaliacao == null)
+        {
+            avaliacao = CriarAvaliacao(alunaCPF, turmaNumero);
+        }
+
+        return avaliacao;
+    }
 }

@@ -20,12 +20,6 @@ public class PresencasController : ControllerBase
     private ITurmaService _turmaService;
     private IAlunaService _alunaService;
     private TextInfo _textInfo;
-    private IDictionary<TipoDeEvento, string> _headerEvento = new Dictionary<TipoDeEvento, string>()
-    {
-        { TipoDeEvento.Abertura, "Abertura" },
-        { TipoDeEvento.Aula, "AULA" },
-        { TipoDeEvento.Monitoria, "Semana" }
-    };
 
     public PresencasController(IPresencaService presencaService, ITurmaService turmaService, IAlunaService alunaService, TextInfo textInfo)
     {
@@ -70,7 +64,6 @@ public class PresencasController : ControllerBase
     {
     }
 
-
     [HttpPost]
     [Route("importar")]
     public async Task<IEnumerable<RegistroPresencaDto>> ImportarPresencas([FromForm] ImportRegistroPresencaDto presencaDto)
@@ -78,7 +71,6 @@ public class PresencasController : ControllerBase
         var leituraLinhaCabecalho = false;
         ICollection<RegistroPresenca> presencasCadastradas = new List<RegistroPresenca>();
         var config = new CsvConfiguration(CultureInfo.InvariantCulture) { Delimiter = ";", Encoding = Encoding.UTF8 };
-        string headerEvento = _headerEvento[presencaDto.TipoDeEvento];
 
         TurmaDto? turmaDto = _turmaService.ObterTurmaPorNumero(presencaDto.TurmaNumero);
         if (turmaDto == null)

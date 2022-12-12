@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MeninasProgramadorasAPI.Data;
+using MeninasProgramadorasAPI.Data.Dtos.Exercicios;
 using MeninasProgramadorasAPI.Data.Dtos.Presencas;
 using MeninasProgramadorasAPI.Models;
 
@@ -41,17 +42,7 @@ public class PresencaService : IPresencaService
     public RegistroPresenca RegistrarPresenca(CreateRegistroPresencaDto presencaDto)
     {
         _alunaService.ValidaAluna(presencaDto.AlunaCPF);
-
-        var avaliacao = _context.Avaliacoes.FirstOrDefault(
-            avaliacao => 
-                avaliacao.AlunaCPF == presencaDto.AlunaCPF 
-                && 
-                avaliacao.TurmaNumero == presencaDto.TurmaNumero);
-
-        if (avaliacao == null)
-        {
-            avaliacao = _avaliacaoService.CriarAvaliacao(presencaDto.AlunaCPF, presencaDto.TurmaNumero);
-        }
+        var avaliacao = _avaliacaoService.ObterOuCriarAvaliacao(presencaDto.AlunaCPF, presencaDto.TurmaNumero);
 
         RegistroPresenca presenca = _mapper.Map<RegistroPresenca>(presencaDto);
         presenca.AvaliacaoId = avaliacao.Id;

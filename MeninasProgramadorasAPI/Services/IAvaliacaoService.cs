@@ -6,7 +6,7 @@ namespace MeninasProgramadorasAPI.Services;
 public interface IAvaliacaoService
 {
     Avaliacao CriarAvaliacao(CreateAvaliacaoDto avaliacaoDto);
-    Avaliacao CriarAvaliacao(string alunaCPF, int turmaNumero);
     AvaliacaoDto? ObterAvaliacaoPorId(int id);
     IEnumerable<AvaliacaoDto> ObterAvaliacoes();
+    Avaliacao ObterOuCriarAvaliacao(string alunaCPF, int turmaNumero);
 }
