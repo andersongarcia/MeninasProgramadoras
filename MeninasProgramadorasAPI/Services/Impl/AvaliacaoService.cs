@@ -24,6 +24,15 @@ public class AvaliacaoService : IAvaliacaoService
         return avaliacao;
     }
 
+    public Avaliacao CriarAvaliacao(string alunaCPF, int turmaNumero)
+    {
+        return CriarAvaliacao(new CreateAvaliacaoDto()
+        {
+            AlunaCPF = alunaCPF,
+            TurmaNumero = turmaNumero
+        });
+    }
+
     public AvaliacaoDto? ObterAvaliacaoPorId(int id)
     {
         Avaliacao? avaliacao = _context.Avaliacoes.FirstOrDefault(avaliacao => avaliacao.Id == id);

@@ -10,4 +10,5 @@ public class AvaliacaoDto
     public virtual object Presencas { get; set; }
     public bool PresenteAbertura { get; set; }
     public double PresencaAulas { get; set; }
+    public double PresencaMonitorias { get; set; }
 }

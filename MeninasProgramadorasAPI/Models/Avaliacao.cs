@@ -32,4 +32,20 @@ public class Avaliacao
             return (double)totalPresencas / (double)Turma.TotalSemanas;
         }
     }
+
+    [NotMapped]
+    public double PresencaMonitorias
+    {
+        get
+        {
+            int semanasCumpridas = 0;
+
+            for (int i = 1; i <= Turma.TotalSemanas; i++)
+            {
+                if(Presencas.Count(presenca => presenca.TipoDeEvento == TipoDeEvento.Monitoria && presenca.NumeroEvento == i) > 4)
+                    semanasCumpridas++;
+            }
+            return (double)semanasCumpridas / (double)Turma.TotalSemanas;
+        }
+    }
 }

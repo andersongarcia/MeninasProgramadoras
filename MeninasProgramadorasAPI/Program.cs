@@ -2,6 +2,7 @@ using MeninasProgramadorasAPI.Data;
 using MeninasProgramadorasAPI.Services;
 using MeninasProgramadorasAPI.Services.Impl;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddScoped<IAlunaService, AlunaService>();
 builder.Services.AddScoped<ITurmaService, TurmaService>();
 builder.Services.AddScoped<IAvaliacaoService, AvaliacaoService>();
 builder.Services.AddScoped<IPresencaService, PresencaService>();
+builder.Services.AddSingleton(new CultureInfo("pt-BR", false).TextInfo);
 
 builder.Services.AddControllers().AddNewtonsoftJson();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

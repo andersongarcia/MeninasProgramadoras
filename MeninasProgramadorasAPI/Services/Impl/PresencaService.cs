@@ -9,16 +9,25 @@ public class PresencaService : IPresencaService
 {
     private AppDbContext _context;
     private IMapper _mapper;
+    private IAvaliacaoService _avaliacaoService;
+    private IAlunaService _alunaService;
 
-    public PresencaService(AppDbContext context, IMapper mapper)
+    public PresencaService(AppDbContext context, IMapper mapper, IAvaliacaoService avaliacaoService, IAlunaService alunaService)
     {
         _context = context;
         _mapper = mapper;
+        _avaliacaoService = avaliacaoService;
+        _alunaService = alunaService;
     }
 
     public IEnumerable<RegistroPresencaDto> ObterPresencas()
     {
-        return _mapper.Map<List<RegistroPresencaDto>>(_context.Presencas);
+        return ObterPresencas(_context.Presencas);
+    }
+
+    public IEnumerable<RegistroPresencaDto> ObterPresencas(IEnumerable<RegistroPresenca> presencas)
+    {
+        return _mapper.Map<List<RegistroPresencaDto>>(presencas);
     }
 
     public RegistroPresencaDto? ObterPresencasPorId(int id)
@@ -31,6 +40,8 @@ public class PresencaService : IPresencaService
 
     public RegistroPresenca RegistrarPresenca(CreateRegistroPresencaDto presencaDto)
     {
+        _alunaService.ValidaAluna(presencaDto.AlunaCPF);
+
         var avaliacao = _context.Avaliacoes.FirstOrDefault(
             avaliacao => 
                 avaliacao.AlunaCPF == presencaDto.AlunaCPF 
@@ -38,7 +49,9 @@ public class PresencaService : IPresencaService
                 avaliacao.TurmaNumero == presencaDto.TurmaNumero);
 
         if (avaliacao == null)
-            throw new ArgumentNullException(nameof(avaliacao));
+        {
+            avaliacao = _avaliacaoService.CriarAvaliacao(presencaDto.AlunaCPF, presencaDto.TurmaNumero);
+        }
 
         RegistroPresenca presenca = _mapper.Map<RegistroPresenca>(presencaDto);
         presenca.AvaliacaoId = avaliacao.Id;
