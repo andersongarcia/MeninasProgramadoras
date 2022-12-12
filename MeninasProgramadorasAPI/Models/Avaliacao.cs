@@ -13,6 +13,7 @@ public class Avaliacao
     public virtual Turma Turma { get; set; }
     public int TurmaNumero { get; set; }
     public virtual IList<RegistroPresenca> Presencas { get; set; }
+    public virtual IList<Exercicio> Exercicios { get; set; }
 
     [NotMapped]
     public bool PresenteAbertura {
@@ -22,7 +23,6 @@ public class Avaliacao
         }
     }
 
-
     [NotMapped]
     public double PresencaAulas
     {
@@ -30,22 +30,6 @@ public class Avaliacao
         {
             int totalPresencas = Presencas.Count(presenca => presenca.TipoDeEvento == TipoDeEvento.Aula);
             return (double)totalPresencas / (double)Turma.TotalSemanas;
-        }
-    }
-
-    [NotMapped]
-    public double PresencaMonitorias
-    {
-        get
-        {
-            int semanasCumpridas = 0;
-
-            for (int i = 1; i <= Turma.TotalSemanas; i++)
-            {
-                if(Presencas.Count(presenca => presenca.TipoDeEvento == TipoDeEvento.Monitoria && presenca.NumeroEvento == i) > 4)
-                    semanasCumpridas++;
-            }
-            return (double)semanasCumpridas / (double)Turma.TotalSemanas;
         }
     }
 }

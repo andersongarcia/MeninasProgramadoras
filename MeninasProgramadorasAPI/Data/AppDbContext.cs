@@ -9,6 +9,7 @@ public class AppDbContext : DbContext
     public DbSet<Turma> Turmas { get; set; }
     public DbSet<Avaliacao> Avaliacoes { get; set; }
     public DbSet<RegistroPresenca> Presencas { get; set; }
+    public DbSet<Exercicio> Exercicios { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> opts)
         : base(opts)
@@ -25,6 +26,11 @@ public class AppDbContext : DbContext
         builder.Entity<RegistroPresenca>()
             .HasOne(presenca => presenca.Avaliacao)
             .WithMany(avaliacao => avaliacao.Presencas)
+            .HasForeignKey(presenca => presenca.AvaliacaoId);
+
+        builder.Entity<Exercicio>()
+            .HasOne(exercicio => exercicio.Avaliacao)
+            .WithMany(avaliacao => avaliacao.Exercicios)
             .HasForeignKey(presenca => presenca.AvaliacaoId);
     }
 }
