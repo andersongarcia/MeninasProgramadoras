@@ -58,7 +58,7 @@ public class Avaliacao
     }
 
     [NotMapped]
-    public virtual double? NotaAvaliacaoFinal 
+    public double? NotaAvaliacaoFinal 
     { 
         get
         {
@@ -71,7 +71,7 @@ public class Avaliacao
     }
 
     [NotMapped]
-    public virtual double? NotaAvaliacaoRecuperacao
+    public double? NotaAvaliacaoRecuperacao
     {
         get
         {
@@ -85,7 +85,7 @@ public class Avaliacao
 
 
     [NotMapped]
-    public virtual double? MediaExercicios
+    public double? MediaExercicios
     {
         get
         {
