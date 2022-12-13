@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="MeninasProgramadorasAPI.Models.Aluna">
+    <Position X="2.75" Y="1.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAACAAAAAAAAAQAACAAAAAAAAAAAAgAIAAAAA=</HashCode>
+      <FileName>Models\Aluna.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MeninasProgramadorasAPI.Models.Avaliacao">
+    <Position X="5.25" Y="1.25" Width="2.75" />
+    <Members>
+      <Property Name="AlunaCPF" Hidden="true" />
+      <Property Name="TurmaNumero" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAIBQAAAAAAAAAABAARAAAAgEAAAAAA=</HashCode>
+      <FileName>Models\Avaliacao.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MeninasProgramadorasAPI.Models.Exercicio">
+    <Position X="8.25" Y="3.5" Width="2.5" />
+    <Members>
+      <Property Name="AvaliacaoId" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAFCAAAAAAAAAAAgAAAAAABAQAAAQAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Models\Exercicio.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MeninasProgramadorasAPI.Models.RegistroPresenca">
+    <Position X="8.25" Y="1.25" Width="2.5" />
+    <Members>
+      <Property Name="AvaliacaoId" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAECAAAAAAAgAAAgAAAAAABAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Models\RegistroPresenca.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MeninasProgramadorasAPI.Models.Turma">
+    <Position X="2.75" Y="3.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAQAAAgAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Models\Turma.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="MeninasProgramadorasAPI.Models.TipoDeEvento">
+    <Position X="11" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAEA=</HashCode>
+      <FileName>Models\TipoDeEvento.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MeninasProgramadorasAPI.Models.TipoDeExercicio">
+    <Position X="11" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAQAAAAAA=</HashCode>
+      <FileName>Models\TipoDeExercicio.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

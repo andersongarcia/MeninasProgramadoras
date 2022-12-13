@@ -11,4 +11,7 @@ public class AvaliacaoDto
     public bool PresenteAbertura { get; set; }
     public double PresencaAulas { get; set; }
     public double PresencaMonitorias { get; set; }
+    public double? NotaAvaliacaoFinal { get; set; }
+    public double? NotaAvaliacaoRecuperacao { get; set; }
+    public double? MediaExercicios { get; set; }
 }

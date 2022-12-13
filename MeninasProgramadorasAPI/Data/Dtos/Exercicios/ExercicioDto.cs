@@ -11,4 +11,5 @@ public class ExercicioDto
     public int Total { get; set; } = 0;
     public int Resolvidos { get; set; } = 0;
     public virtual DateTime Registro { get; set; } = DateTime.Now;
+    public double Nota { get; set; }
 }
