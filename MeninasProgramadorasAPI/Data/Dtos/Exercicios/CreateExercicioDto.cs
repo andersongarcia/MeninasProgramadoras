@@ -10,7 +10,7 @@ public class CreateExercicioDto
     [Required(ErrorMessage = "O número da turma deve ser informado")]
     public int TurmaNumero { get; set; }
     [Required(ErrorMessage = "O tipo do evento deve ser informado")]
-    public TipoDeEvento TipoDeEvento { get; set; }
+    public TipoDeExercicio TipoDeExercicio { get; set; }
     public int? NumeroExercicio { get; set; }  // 1 para Exercício 1, 2 para Exercício 2, etc
     public int Total { get; set; } = 0;
     public int Resolvidos { get; set; } = 0;

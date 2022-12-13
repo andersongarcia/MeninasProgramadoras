@@ -18,6 +18,7 @@ builder.Services.AddScoped<IAlunaService, AlunaService>();
 builder.Services.AddScoped<ITurmaService, TurmaService>();
 builder.Services.AddScoped<IAvaliacaoService, AvaliacaoService>();
 builder.Services.AddScoped<IPresencaService, PresencaService>();
+builder.Services.AddScoped<IExercicioService, ExercicioService>();
 builder.Services.AddSingleton(new CultureInfo("pt-BR", false).TextInfo);
 
 builder.Services.AddControllers().AddNewtonsoftJson();

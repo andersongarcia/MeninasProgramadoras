@@ -7,7 +7,9 @@ public interface IAlunaService
 {
     Aluna CriarAluna(CreateAlunaDto alunaDto);
     AlunaDto? ObterAlunaPorCPF(string cpf);
-    AlunaDto? ObterAlunaPorNome(string? v);
+    AlunaDto? ObterAlunaPorNome(string? nome);
+    AlunaDto? ObterAlunaPorEmail(string? email);
+    AlunaDto? ObterAlunaBeecrowdId(string? beecrowdId);
     IEnumerable<AlunaDto> ObterAlunas();
     IEnumerable<AlunaDto> ObterAlunas(IEnumerable<Aluna> alunas);
     void RemoverAluna(string cpf);

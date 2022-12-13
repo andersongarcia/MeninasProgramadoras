@@ -26,9 +26,30 @@ public class AlunaService : IAlunaService
         return aluna;
     }
 
+    public AlunaDto? ObterAlunaBeecrowdId(string? beecrowdId)
+    {
+        if(beecrowdId == null) return null;
+
+        Aluna? aluna = _context.Alunas.FirstOrDefault(aluna => aluna.BeecrowdId == beecrowdId);
+        
+        if (aluna == null) return null;
+
+        return _mapper.Map<AlunaDto>(aluna);
+    }
+
     public AlunaDto? ObterAlunaPorCPF(string cpf)
     {
         Aluna? aluna = _context.Alunas.FirstOrDefault(aluna => aluna.CPF == cpf);
+        if (aluna == null) return null;
+
+        return _mapper.Map<AlunaDto>(aluna);
+    }
+
+    public AlunaDto? ObterAlunaPorEmail(string? email)
+    {
+        if(email == null) return null;
+
+        Aluna? aluna = _context.Alunas.FirstOrDefault(aluna => aluna.Email == email);
         if (aluna == null) return null;
 
         return _mapper.Map<AlunaDto>(aluna);

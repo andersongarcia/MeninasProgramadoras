@@ -96,6 +96,9 @@ public class Avaliacao
 
                 if (exercicio != null) notas.Add(exercicio.Nota);
             }
+
+            if(notas.Count == 0) return null;
+
             return notas.Average();
         }
     }

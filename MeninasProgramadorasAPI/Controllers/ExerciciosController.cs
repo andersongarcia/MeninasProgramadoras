@@ -86,7 +86,7 @@ public class ExerciciosController : ControllerBase
     /// <exception cref="Exception"></exception>
     [HttpPost]
     [Route("importar")]
-    public async Task<IEnumerable<ExercicioDto>> ImportarPresencas([FromForm] ImportExercicioDto exercicioDto)
+    public async Task<IEnumerable<ExercicioDto>> ImportarExercicios([FromForm] ImportExercicioDto exercicioDto)
     {
         var leituraLinhaCabecalho = false;
         ICollection<Exercicio> exerciciosCadastrados = new List<Exercicio>();
@@ -109,7 +109,7 @@ public class ExerciciosController : ControllerBase
                         // Caso contrário, segue para a próxima linha
                         if (!leituraLinhaCabecalho)
                         {
-                            if (csv.GetField(0).StartsWith("NOME"))
+                            if (csv.GetField(0).StartsWith("beecrowd"))
                             {
                                 csv.ReadHeader();
                                 leituraLinhaCabecalho = true;
@@ -118,30 +118,37 @@ public class ExerciciosController : ControllerBase
                         }
 
                         AlunaDto alunaDto = null;
-                        if (csv.HeaderRecord.Contains("CPF"))
-                            alunaDto = _alunaService.ObterAlunaPorCPF(csv.GetField("CPF"));
-                        else if (csv.HeaderRecord.Contains("NOME"))
-                            alunaDto = _alunaService.ObterAlunaPorNome(csv.GetField("NOME"));
+                        if (csv.HeaderRecord.Contains("beecrowd id"))
+                            alunaDto = _alunaService.ObterAlunaBeecrowdId(csv.GetField("beecrowd id"));
+                        else if (csv.HeaderRecord.Contains("email"))
+                            alunaDto = _alunaService.ObterAlunaPorEmail(csv.GetField("email"));
 
                         if (alunaDto == null) continue;
 
-                        // Lê presença em aula/monitoria para cada semana
-                        for (int i = 1; i <= turmaDto.TotalSemanas; i++)
+                        try
                         {
-                            try
+                            int total = int.Parse(csv.GetField("total_score")) / 100;
+                            int resolvidos = int.Parse(csv.GetField("solved"));
+
+                            CreateExercicioDto createDto = new CreateExercicioDto()
                             {
-                                switch (exercicioDto.TipoDeExercicio)
-                                {
-                                    case TipoDeExercicio.Exercicio:
-                                        break;
-                                    case TipoDeExercicio.AvaliacaoFinal:
-                                        break;
-                                }
-                            }
-                            catch (AlunaNotFoundException ex)
+                                AlunaCPF = alunaDto.CPF,
+                                TurmaNumero = exercicioDto.TurmaNumero,
+                                TipoDeExercicio = exercicioDto.TipoDeExercicio,
+                                Total = total,
+                                Resolvidos = resolvidos
+                            };
+
+                            if(exercicioDto.TipoDeExercicio == TipoDeExercicio.Exercicio)
                             {
-                                Console.WriteLine(ex.Message);
+                                createDto.NumeroExercicio = exercicioDto.NumeroExercicio;
                             }
+                            Exercicio exercicio = _exercicioService.RegistrarExercicio(createDto);
+                            exerciciosCadastrados.Add(exercicio);
+                        }
+                        catch (AlunaNotFoundException ex)
+                        {
+                            Console.WriteLine(ex.Message);
                         }
                     }
                 }
